@@ -8,17 +8,14 @@ A full-featured **Employee Management System** developed using **.NET Framework*
 
 This project follows a **5-layer architecture** for maintainability and scalability:
 
-NTierArchitecture/
 
-├── EMS.Model # POCO entity classes representing database tables
-
-├── EMS.Repository # Data access layer using Entity Framework
-
-├── EMS.Service # Business logic and service layer
-
-├── EMS.Presentation # UI layer (e.g., Windows Forms or ASP.NET MVC)
-
-└── EMS.Common # Shared helpers, constants, utility functions
+    NTierArchitecture/  
+        │
+        ├── EMS.Model # POCO entity classes representing database tables
+        ├── EMS.Repository # Data access layer using Entity Framework
+        ├── EMS.Service # Business logic and service layer  
+        ├── EMS.Presentation # UI layer (e.g., Windows Forms or ASP.NET MVC)
+        └── EMS.Common # Shared helpers, constants, utility functions
 
 
 Each layer is independent and follows SOLID principles, allowing easy testing, maintenance, and future scaling.
