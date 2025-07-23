@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Model.ViewModel
+namespace EMS.Model.ViewModel.DTOs
 {
     public class EmployeeDto
     {

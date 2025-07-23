@@ -1,5 +1,5 @@
 ﻿using EMS.Model.DataModel;
-using EMS.Model.ViewModel;
+using EMS.Model.ViewModel.DTOs;
 using EMS.Service.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,18 +20,20 @@ namespace EMS.Presentation.Controllers
         public IActionResult GetEmployees()
         {
             var result = _employeeservice.GetAllEmployees();
-            return Ok(result);
+            //return Ok(result);
+            return StatusCode(result.StatusCode, result);
         }
 
         [HttpGet("{id:int}")]
         public IActionResult GetEmployeeById(int id) 
         { 
             var result = _employeeservice.GetEmpById(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
+            //if (result == null)
+            //{
+            //    return NotFound();
+            //}
+            //return Ok(result);
+            return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost("create")]
@@ -39,7 +41,8 @@ namespace EMS.Presentation.Controllers
         public IActionResult CreateEmp(EmployeeCreateDto createDto)
         {
             var emp = _employeeservice.AddEmployee(createDto);
-            return Ok(emp);
+            //return Ok(emp);
+            return StatusCode(emp.StatusCode, emp);
         }
     }
 }

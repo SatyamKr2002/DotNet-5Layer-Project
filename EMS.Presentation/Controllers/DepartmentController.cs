@@ -1,6 +1,5 @@
-﻿using EMS.Model.ViewModel;
+﻿using EMS.Model.ViewModel.DTOs;
 using EMS.Service.IServices;
-using EMS.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.Presentation.Controllers
@@ -19,21 +18,24 @@ namespace EMS.Presentation.Controllers
         public IActionResult Get()
         { 
             var result = _departmentservice.GetAllDepartments();
-            return Ok(result);
+            //return Ok(result);
+            return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost("create")]
-        public IActionResult CreateEmp(DeptCreateDto dto)
+        public IActionResult CreateEmp(DepartmentCreateDto dto)
         {
             var emp = _departmentservice.AddDepartment(dto);
-            return Ok(emp);
+            //return Ok(emp);
+            return StatusCode(emp.StatusCode, emp);
         }
 
-        [HttpGet("WithEmployees")]
+        [HttpGet("DepartmentWithEmployees")]
         public IActionResult GetDeptWithEmp()
         {
             var result = _departmentservice.GetDepartmentsWithEmployees();
-            return Ok(result);
+            //return Ok(result);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

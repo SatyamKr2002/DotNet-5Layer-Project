@@ -1,8 +1,10 @@
+using EMS.Common;
 using EMS.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEmployeeDependencies(builder.Configuration);
+builder.Services.AddEmployeeDependencies(builder.Configuration);  // Service + repository DI class
+builder.Services.AddCommonLayer(); // common layer DI class call hua
 
 // Add services to the container.
 builder.Services.AddControllers();

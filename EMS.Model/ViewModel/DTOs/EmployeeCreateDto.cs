@@ -1,7 +1,7 @@
 ﻿using EMS.Model.BaseModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace EMS.Model.ViewModel
+namespace EMS.Model.ViewModel.DTOs
 {
     public class EmployeeCreateDto
     {

@@ -1,12 +1,13 @@
 ﻿using EMS.Model.ViewModel;
+using EMS.Model.ViewModel.DTOs;
 
 namespace EMS.Service.IServices
 {
     public interface IDepartmentService
     {
-        IEnumerable<DeptDto> GetAllDepartments();
+        Response GetAllDepartments();
         //Department GetDeptById(int id);
-        DeptDto AddDepartment(DeptCreateDto deptCreateDto);
-        public IEnumerable<DepartmentWithEmployeesDto> GetDepartmentsWithEmployees();
+        Response AddDepartment(DepartmentCreateDto departmentCreateDto);
+        public Response GetDepartmentsWithEmployees();
     }
 }
