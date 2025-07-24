@@ -16,6 +16,8 @@ namespace EMS.Repository.Context
                 .WithMany(d => d.Employees)
                 .HasForeignKey(e => e.DepartmentId);
 
+            modelBuilder.Entity<Employee>().HasQueryFilter(e => !e.IsDeleted);
+
             base.OnModelCreating(modelBuilder);
         }
     }

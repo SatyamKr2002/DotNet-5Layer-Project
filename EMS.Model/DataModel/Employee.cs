@@ -1,4 +1,5 @@
 ﻿using EMS.Model.BaseModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EMS.Model.DataModel
 {
@@ -9,5 +10,13 @@ namespace EMS.Model.DataModel
         public int Age { get; set; }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+        public DateTime? LastLogin { get; set; }
     }
 }

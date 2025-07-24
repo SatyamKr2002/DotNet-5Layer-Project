@@ -2,7 +2,7 @@
 using EMS.Model.DataModel;
 using EMS.Model.ViewModel.DTOs;
 
-namespace EMS.Common
+namespace EMS.Common.MapsterMapping
 {
     public static class MappingConfig
     {

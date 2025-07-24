@@ -1,16 +1,20 @@
 using EMS.Common;
 using EMS.Service;
+using MapsterMapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEmployeeDependencies(builder.Configuration);  // Service + repository DI class
 builder.Services.AddCommonLayer(); // common layer DI class call hua
 
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 

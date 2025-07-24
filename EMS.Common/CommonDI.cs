@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EMS.Common.HashPassword;
+using EMS.Common.MapsterMapping;
+using Mapster;
+using MapsterMapper;
+using Microsoft.Extensions.DependencyInjection;
 namespace EMS.Common
 {
     public static class CommonDI
@@ -6,6 +10,13 @@ namespace EMS.Common
         public static void AddCommonLayer(this IServiceCollection services)
         {
             MappingConfig.RegisterMapping();
+
+            var config = TypeAdapterConfig.GlobalSettings;
+
+            services.AddSingleton(config);
+
+            services.AddScoped<IMapper, ServiceMapper>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
         }
     }
 }

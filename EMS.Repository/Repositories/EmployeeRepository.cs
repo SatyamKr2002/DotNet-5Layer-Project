@@ -40,5 +40,15 @@ namespace EMS.Repository.Repositories
                            .FirstOrDefault(e => e.EmployeeId == id);
         }
 
+        public Employee GetByEmail(string email)
+        {
+            return _context.Employees.FirstOrDefault(e => e.Email == email);
+        }
+
+        public void Update(Employee employee)
+        {
+            _context.Employees.Update(employee);
+            _context.SaveChanges();
+        }
     }
 }

@@ -30,6 +30,10 @@ namespace EMS.Service
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IDepartmentService, DepartmentService>();
 
+            //services.AddScoped<ILogin, Login>();
+            services.AddScoped<IAuthService, AuthService>();
+
+
             return services;
         }
     }

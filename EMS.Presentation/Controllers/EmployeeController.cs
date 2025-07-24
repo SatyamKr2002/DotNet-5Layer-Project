@@ -1,5 +1,4 @@
-﻿using EMS.Model.DataModel;
-using EMS.Model.ViewModel.DTOs;
+﻿using EMS.Model.ViewModel.DTOs;
 using EMS.Service.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,8 +24,8 @@ namespace EMS.Presentation.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetEmployeeById(int id) 
-        { 
+        public IActionResult GetEmployeeById(int id)
+        {
             var result = _employeeservice.GetEmpById(id);
             //if (result == null)
             //{
@@ -43,6 +42,13 @@ namespace EMS.Presentation.Controllers
             var emp = _employeeservice.AddEmployee(createDto);
             //return Ok(emp);
             return StatusCode(emp.StatusCode, emp);
+        }
+
+        [HttpPost("delete")]
+        public IActionResult DeleteEmp(int id)
+        {
+            var employee = _employeeservice.DeleteEmployee(id);
+            return StatusCode(employee.StatusCode, employee);
         }
     }
 }

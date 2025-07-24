@@ -11,5 +11,6 @@ namespace EMS.Service.IServices
         Response GetEmpById(int id);
         //EmployeeDto AddEmployee(EmployeeCreateDto createDto);
         Response AddEmployee(EmployeeCreateDto createDto);
+        Response DeleteEmployee(int id);
     }
 }

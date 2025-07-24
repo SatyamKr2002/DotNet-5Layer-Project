@@ -5,15 +5,18 @@ using EMS.Model.ViewModel.DTOs;
 using EMS.Repository.IRepositories;
 using EMS.Service.IServices;
 using Mapster;
+using MapsterMapper;
 
 namespace EMS.Service.Services
 {
     public class DepartmentService : IDepartmentService
     {
         private readonly IDepartmentRepository _departmentrepository;
-        public DepartmentService(IDepartmentRepository departmentrepository)
+        private readonly IMapper _mapper;
+        public DepartmentService(IDepartmentRepository departmentrepository, IMapper mapper)
         {
             _departmentrepository = departmentrepository;
+            _mapper = mapper;
         }
 
         //1
@@ -47,11 +50,12 @@ namespace EMS.Service.Services
         {
             try
             {
-                var department = departmentCreateDto.Adapt<Department>();
+                //var department = departmentCreateDto.Adapt<Department>();
+                var department = _mapper.Map<Department>(departmentCreateDto);  
 
                 _departmentrepository.CreateDept(department);
 
-                var departmentDto = department.Adapt<DepartmentDto>();
+                var departmentDto = _mapper.Map<DepartmentDto>(department);
 
                 return new Response(201, MessageEnum.Created.ToString(), departmentDto);
             }
@@ -83,7 +87,7 @@ namespace EMS.Service.Services
             {
                 var departments = _departmentrepository.GetAllDepts();  
 
-                var deptDto = departments.Adapt<DepartmentDto>();
+                var deptDto = _mapper.Map<List<DepartmentDto>>(departments);
 
                 return new Response(200, MessageEnum.Success.ToString(), deptDto);
             }
@@ -115,9 +119,10 @@ namespace EMS.Service.Services
         {
             
             var departments = _departmentrepository.GetAllDeptsWithEmployees();
-            var deptWithEmp = departments.Adapt<DepartmentWithEmployeesDto>();
+
+            var deptWithEmp = _mapper.Map<List<DepartmentWithEmployeesDto>>(departments);
+
             return  new Response(200,MessageEnum.Success.ToString(), deptWithEmp);
         }
-
     }
 }

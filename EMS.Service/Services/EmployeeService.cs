@@ -1,10 +1,10 @@
-﻿using EMS.Model.DataModel;
+﻿using EMS.Common.HashPassword;
+using EMS.Model.DataModel;
 using EMS.Model.Enum;
 using EMS.Model.ViewModel;
 using EMS.Model.ViewModel.DTOs;
 using EMS.Repository.IRepositories;
 using EMS.Service.IServices;
-using Mapster;
 using MapsterMapper;
 
 namespace EMS.Service.Services
@@ -13,11 +13,13 @@ namespace EMS.Service.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
+        private readonly IPasswordHasher _login;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper)
+        public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper, IPasswordHasher login)
         {
             _employeeRepository = employeeRepository;
             _mapper = mapper;
+            _login = login;
         }
         
         //1
@@ -50,6 +52,7 @@ namespace EMS.Service.Services
             try
             {
                 var employee = _mapper.Map<Employee>(employeeCreateDto);
+                employee.Password = _login.HashPassword(employee.Password);
                 employee.CreatedAt = DateTime.Now;
                 employee.CreatedBy = "System";
                 employee.IsDeleted = false;
@@ -66,7 +69,6 @@ namespace EMS.Service.Services
             }
 
         }
-        
         public Response GetAllEmployees()
         {
             try
@@ -104,7 +106,8 @@ namespace EMS.Service.Services
                 var e = _employeeRepository.GetById(id);
                 if (e == null)
                 {
-                    return new Response(404, MessageEnum.Not_Found.ToString());
+                    string msg = string.Join(" ", MessageEnum.Not_Found.ToString().Split('_'));
+                    return new Response(404, msg);
                 }
 
                 var empDto = _mapper.Map<EmployeeDto>(e);
@@ -116,7 +119,8 @@ namespace EMS.Service.Services
             }
         }
 
-       // 1. 
+
+        // 1. 
         //public EmployeeDto GetEmpById(int id)
         //{
         //   return employeeRepository.GetById(id);
@@ -137,6 +141,23 @@ namespace EMS.Service.Services
         //        DepartmentId = e.DepartmentId
         //    };
         //}
-
+        public Response DeleteEmployee(int id)
+        {
+            try
+            {
+                var emp = _employeeRepository.GetById(id);
+                if(emp == null)
+                {
+                    return new Response(404, MessageEnum.Not_Found.ToString());
+                }
+                emp.IsDeleted = true;
+                _employeeRepository.Update(emp);
+                return new Response(200, MessageEnum.Success.ToString());
+            }
+            catch (Exception e)
+            {
+                return new Response(500, MessageEnum.ServerError.ToString(), e.Message);
+            }
+        }
     }
 }
