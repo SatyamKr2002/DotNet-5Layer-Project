@@ -1,18 +1,19 @@
 ﻿using EMS.Model.ViewModel.DTOs;
 using EMS.Service.IServices;
+using EMS.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseController
     {
         private readonly IEmployeeService _employeeservice;
 
-        public EmployeeController(IEmployeeService service)
+        public EmployeeController(IEmployeeService employeeservice)
         {
-            _employeeservice = service;
+            _employeeservice = employeeservice;
         }
 
         [HttpGet]
@@ -36,10 +37,10 @@ namespace EMS.Presentation.Controllers
         }
 
         [HttpPost("create")]
-
-        public IActionResult CreateEmp(EmployeeCreateDto createDto)
+        public IActionResult CreateEmp([FromBody] EmployeeCreateDto createDto)
         {
-            var emp = _employeeservice.AddEmployee(createDto);
+            var createdBy = GetUsername();
+            var emp = _employeeservice.AddEmployee(createDto, createdBy);
             //return Ok(emp);
             return StatusCode(emp.StatusCode, emp);
         }

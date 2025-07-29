@@ -1,5 +1,6 @@
 ﻿using EMS.Common.HashPassword;
 using EMS.Common.MapsterMapping;
+using EMS.Common.Token;
 using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace EMS.Common
 
             services.AddScoped<IMapper, ServiceMapper>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<ITokenService, TokenService>();
         }
     }
 }

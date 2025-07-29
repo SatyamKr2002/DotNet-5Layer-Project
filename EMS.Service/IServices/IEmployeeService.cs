@@ -10,7 +10,7 @@ namespace EMS.Service.IServices
         //EmployeeDto GetEmpById(int id);
         Response GetEmpById(int id);
         //EmployeeDto AddEmployee(EmployeeCreateDto createDto);
-        Response AddEmployee(EmployeeCreateDto createDto);
+        Response AddEmployee(EmployeeCreateDto createDto, string createdBy);
         Response DeleteEmployee(int id);
     }
 }

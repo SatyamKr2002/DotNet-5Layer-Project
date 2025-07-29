@@ -9,6 +9,8 @@
         Unauthorized,  // 401
         User_Not_Found,
         Invalid_Credentials,
-        Login_Successful
+        Login_Successful,
+        BadRequest,  // 400
+        Conflict //409
     }
 }

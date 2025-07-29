@@ -1,4 +1,5 @@
 ﻿using EMS.Common.HashPassword;
+using EMS.Common.Token;
 using EMS.Model.Enum;
 using EMS.Model.ViewModel;
 using EMS.Model.ViewModel.DTOs;
@@ -11,11 +12,13 @@ namespace EMS.Service.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPasswordHasher _login;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(IEmployeeRepository employeeRepository, IPasswordHasher login)
+        public AuthService(IEmployeeRepository employeeRepository, IPasswordHasher login, ITokenService tokenService)
         {
             _employeeRepository = employeeRepository;
             _login = login;
+            _tokenService = tokenService;
         }
 
         public Response Login(LoginDto loginDto)
@@ -38,7 +41,17 @@ namespace EMS.Service.Services
             employee.LastLogin = DateTime.UtcNow;
             _employeeRepository.Update(employee);
 
-            var data = new { employee.EmployeeId, employee.Name, employee.Age };
+            var token = _tokenService.GenerateToken(employee);
+
+            var data = new
+            {
+                employee.EmployeeId,
+                employee.Name,
+                employee.Age,
+                employee.Email,
+                Token = token
+            };
+
             msg = string.Join(" ", MessageEnum.Login_Successful.ToString().Split('_'));
             return new Response(200, msg, data);
         }

@@ -1,5 +1,6 @@
 ﻿using EMS.Model.ViewModel.DTOs;
 using EMS.Service.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.API.Controllers
@@ -15,7 +16,8 @@ namespace EMS.API.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
+        [AllowAnonymous]
+        [HttpPost("Login")]
         public IActionResult Login(LoginDto loginDto)
         {
             var response = _authService.Login(loginDto);
@@ -23,7 +25,6 @@ namespace EMS.API.Controllers
             {
                 return Ok(response);
             }
-
             return StatusCode(response.StatusCode, response);
         }
     }

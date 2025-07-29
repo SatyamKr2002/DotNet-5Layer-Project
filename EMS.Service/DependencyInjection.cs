@@ -34,6 +34,7 @@ namespace EMS.Service
             services.AddScoped<IAuthService, AuthService>();
 
 
+
             return services;
         }
     }

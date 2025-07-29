@@ -6,13 +6,14 @@ namespace EMS.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController : ControllerBase
+    public class DepartmentController : BaseController
     {
         private readonly IDepartmentService _departmentservice;
-        public DepartmentController(IDepartmentService service)
+        public DepartmentController(IDepartmentService departmentService)
         {
-            this._departmentservice = service;
+            _departmentservice = departmentService;
         }
+
 
         [HttpGet]
         public IActionResult Get()
@@ -23,7 +24,7 @@ namespace EMS.Presentation.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateEmp(DepartmentCreateDto dto)
+        public IActionResult CreateEmp([FromBody] DepartmentCreateDto dto)
         {
             var emp = _departmentservice.AddDepartment(dto);
             //return Ok(emp);
